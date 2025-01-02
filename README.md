@@ -41,7 +41,7 @@ mac-ansible/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/mac-ansible.git
+git clone https://github.com/mineraleyt/mac-ansible.git
 cd mac-ansible
 ```
 

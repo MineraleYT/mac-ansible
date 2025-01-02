@@ -35,8 +35,6 @@ mac-ansible/
 │   ├── utility-apps.yml   # Utility applications
 │   ├── network-apps.yml   # Network tools
 │   └── system-config.yml  # System preferences
-└── Casks/
-    └── davinci-resolve-studio.rb
 ```
 
 ## ⚡️ Quick Start

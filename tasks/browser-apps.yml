@@ -1,44 +1,44 @@
 ---
-# Browsers & Communication Tools Installation
+# Browsers and Communication Tools Installation
 - name: Install Browsers and Communication Tools
   when: install_browsers | bool
   block:
-    - name: Install google-chrome
+    - name: Install Google Chrome
       homebrew_cask:
         name: google-chrome
         state: present
 
-    - name: Install firefox
+    - name: Install Firefox
       homebrew_cask:
         name: firefox
         state: present
 
-    - name: Install discord
+    - name: Install Discord
       homebrew_cask:
         name: discord
         state: present
 
-    - name: Install telegram
+    - name: Install Telegram
       homebrew_cask:
         name: telegram
         state: present
 
-    - name: Install telegram-alpha
+    - name: Install Telegram Alpha
       homebrew_cask:
         name: telegram-alpha
         state: present
 
-    - name: Install whatsapp
+    - name: Install WhatsApp
       homebrew_cask:
         name: whatsapp
         state: present
 
-    - name: Install zoom
+    - name: Install Zoom
       homebrew_cask:
         name: zoom
         state: present
 
-    - name: Install chatgpt
+    - name: Install ChatGPT
       homebrew_cask:
         name: chat-gpt
         state: present

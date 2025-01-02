@@ -20,14 +20,6 @@
     that: available_space.stdout | regex_replace('G','') | float >= 20.0
     msg: "At least 20GB of free disk space is required"
 
-# Backup Check
-- name: Check Time Machine status
-  command: tmutil status
-  register: tm_status
-  ignore_errors: true
-  changed_when: false
-  when: enable_time_machine | bool
-
 # Homebrew Check
 - name: Check if Homebrew is installed
   command: which brew

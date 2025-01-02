@@ -5,20 +5,10 @@ install_browsers: true
 install_media: true
 install_utilities: true
 install_network: true
-install_creative: true
-install_custom_apps: false  # Custom apps installation disabled by default
-
-# Custom Apps Configuration
-# Uncomment and modify these as needed
-# custom_app_name: "YourApp"
-# custom_app_url: "https://example.com/YourApp.dmg"
-# custom_pkg_name: "YourPackage"
-# custom_pkg_url: "https://example.com/YourPackage.pkg"
-# custom_zip_name: "YourZipApp"
-# custom_zip_url: "https://example.com/YourZipApp.zip"
+install_custom_apps: false
 
 # System Preferences
-dock_autohide: true
+dock_autohide: false
 dark_mode: true
 
 # Security Settings

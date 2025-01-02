@@ -1,6 +1,28 @@
 ---
+# System Configuration and Cleanup
+- name: Configure System Settings
+  block:
+    # Security Settings
+    - name: Configure Firewall
+      command: sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+      when: enable_firewall | bool
+      become: true
+
+    # System Preferences
+    - name: Set Dock auto-hide
+      command: defaults write com.apple.dock autohide -bool {{ dock_autohide | string | lower }}
+      when: dock_autohide is defined
+
+    - name: Set Dark Mode
+      command: defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+      when: dark_mode | bool
+
+    - name: Restart Dock to apply changes
+      command: killall Dock
+      ignore_errors: true
+
 # Cleanup Tasks
-- name: Perform Cleanup Tasks
+- name: Perform Cleanup
   block:
     - name: Cleanup Homebrew
       command: brew cleanup
@@ -11,9 +33,7 @@
         path: "~/Library/Caches/Homebrew"
         state: absent
 
-# Installation Summary
-- name: Generate Installation Summary
-  block:
+    # Installation Summary
     - name: Get installed package versions
       command: brew list --versions
       register: installed_versions
@@ -21,13 +41,11 @@
 
     - name: Display Installation Summary
       debug:
-        msg: 
+        msg:
           - "Installation Complete!"
           - "Installed Packages:"
           - "{{ installed_versions.stdout_lines }}"
           - "System Configuration:"
           - "- Firewall: {{ enable_firewall }}"
-          - "- FileVault: {{ enable_filevault }}"
-          - "- Time Machine: {{ enable_time_machine }}"
           - "- Dark Mode: {{ dark_mode }}"
-          - "- DNS Servers: {{ dns_servers | join(', ') }}"
+          - "- Dock Auto-hide: {{ dock_autohide }}"

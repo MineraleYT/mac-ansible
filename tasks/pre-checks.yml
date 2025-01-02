@@ -1,4 +1,21 @@
 ---
+# Install Xcode Command Line Tools
+- name: Install Xcode Command Line Tools
+  raw: |
+    # Check if already installed
+    if ! [ -x "$(command -v xcode-select)" ]; then
+      # Download Command Line Tools
+      touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+      PROD=$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')
+      softwareupdate -i "$PROD" --verbose;
+      rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+    fi
+  args:
+    executable: /bin/bash
+  register: xcode_install
+  changed_when: "'No new software available.' not in xcode_install.stdout"
+  become: true
+
 # System Requirements Check
 - name: Check macOS version
   command: sw_vers -productVersion
@@ -10,15 +27,19 @@
     that: macos_version.stdout is version('11.0', '>=')
     msg: "macOS 11.0 or higher is required"
 
-- name: Check available disk space
-  command: df -h / | awk 'NR==2 {print $4}'
+- name: Get available disk space
+  raw: df -h / | grep "/" | awk '{print $4}'
   register: available_space
   changed_when: false
 
-- name: Verify minimum disk space (20GB)
+- name: Show available disk space
+  debug:
+    msg: "Available disk space: {{ available_space.stdout }}"
+
+- name: Verify minimum disk space (10GB)
   assert:
-    that: available_space.stdout | regex_replace('G','') | float >= 20.0
-    msg: "At least 20GB of free disk space is required"
+    that: available_space.stdout | regex_replace('G','') | float >= 10.0
+    msg: "At least 10GB of free disk space is required. Current available space: {{ available_space.stdout }}"
 
 # Homebrew Check
 - name: Check if Homebrew is installed

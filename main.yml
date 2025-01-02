@@ -1,0 +1,37 @@
+---
+- hosts: all
+  vars_files:
+    - vars/config.yml
+
+  pre_tasks:
+    - name: Include Pre-installation Checks
+      include_tasks: tasks/pre-checks.yml
+
+  tasks:
+    - name: Include Development Tools Installation
+      include_tasks: tasks/dev-apps.yml
+      when: install_dev_tools | bool
+
+    - name: Include Browsers and Communication Tools Installation
+      include_tasks: tasks/browser-apps.yml
+      when: install_browsers | bool
+
+    - name: Include Media Applications Installation
+      include_tasks: tasks/media-apps.yml
+      when: install_media | bool
+
+    - name: Include Utility Applications Installation
+      include_tasks: tasks/utility-apps.yml
+      when: install_utilities | bool
+
+    - name: Include Network Tools Installation
+      include_tasks: tasks/network-apps.yml
+      when: install_network | bool
+
+    - name: Include DaVinci Resolve Studio Installation
+      include_tasks: tasks/davinci-resolve.yml
+      when: install_davinci | bool
+
+  post_tasks:
+    - name: Include System Configuration and Cleanup
+      include_tasks: tasks/system-config.yml

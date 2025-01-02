@@ -1,0 +1,112 @@
+---
+# DaVinci Resolve Studio Installation and Setup
+- name: Configure DaVinci Resolve Studio
+  block:
+    # Create necessary directories
+    - name: Create DaVinci Resolve directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      with_items:
+        - /Library/Application Support/Blackmagic Design
+        - ~/Movies/DaVinci Resolve Projects
+        - ~/Movies/DaVinci Resolve Render Cache
+        - ~/Movies/DaVinci Resolve Sound Library
+
+    # Install dependencies
+    - name: Install DaVinci Resolve dependencies
+      homebrew:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - cuda
+        - ffmpeg
+        - openssl
+        - python@3.11  # For scripting support
+
+    # Install DaVinci Resolve Studio
+    - name: Install DaVinci Resolve Studio
+      homebrew_cask:
+        name: davinci-resolve-studio
+        state: present
+      when: davinci_studio_license is defined
+
+    # Configure Performance Settings
+    - name: Create DaVinci Resolve preferences directory
+      file:
+        path: ~/Library/Preferences/Blackmagic Design/DaVinci Resolve
+        state: directory
+        mode: '0755'
+
+    # Set up cache locations
+    - name: Configure cache locations
+      copy:
+        dest: ~/Library/Preferences/Blackmagic Design/DaVinci Resolve/Resolve Disk Database.xml
+        content: |
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>CacheBaseDir</key>
+            <string>~/Movies/DaVinci Resolve Render Cache</string>
+            <key>GalleryStillsBaseDir</key>
+            <string>~/Movies/DaVinci Resolve Projects</string>
+          </dict>
+          </plist>
+
+    # Create default project settings
+    - name: Set up default project settings
+      copy:
+        dest: ~/Library/Preferences/Blackmagic Design/DaVinci Resolve/defaults.prefs
+        content: |
+          {
+            "ProjectSettings": {
+              "TimelineFrameRate": "24",
+              "TimelineResolution": {
+                "Width": 3840,
+                "Height": 2160
+              },
+              "ColorScience": "DaVinci YRGB Color Managed",
+              "ColorSpaceInput": "DaVinci Wide Gamut",
+              "ColorSpaceTimeline": "DaVinci Wide Gamut",
+              "ColorSpaceOutput": "Rec.709 Gamma 2.4",
+              "AutoSave": true,
+              "AutoSaveInterval": 5
+            }
+          }
+
+    # Set up GPU configuration
+    - name: Configure GPU settings
+      copy:
+        dest: ~/Library/Preferences/Blackmagic Design/DaVinci Resolve/gpu.config
+        content: |
+          {
+            "UseGPU": true,
+            "PreferredGPU": "Auto",
+            "GPUProcessingMode": "OpenCL"
+          }
+
+    # Create backup directory
+    - name: Create backup directory
+      file:
+        path: ~/Documents/DaVinci Resolve Backups
+        state: directory
+        mode: '0755'
+
+    # Display installation summary
+    - name: Show DaVinci Resolve installation summary
+      debug:
+        msg:
+          - "DaVinci Resolve Studio Installation Complete"
+          - "Directories created:"
+          - "  - /Library/Application Support/Blackmagic Design"
+          - "  - ~/Movies/DaVinci Resolve Projects"
+          - "  - ~/Movies/DaVinci Resolve Render Cache"
+          - "  - ~/Movies/DaVinci Resolve Sound Library"
+          - "  - ~/Documents/DaVinci Resolve Backups"
+          - "Dependencies installed:"
+          - "  - CUDA"
+          - "  - FFmpeg"
+          - "  - OpenSSL"
+          - "  - Python 3.11"

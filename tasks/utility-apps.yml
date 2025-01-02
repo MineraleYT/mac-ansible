@@ -1,0 +1,49 @@
+---
+# Utility Applications Installation
+- name: Install Utility Apps
+  when: install_utilities | bool
+  block:
+    - name: Install warp
+      homebrew_cask:
+        name: warp
+        state: present
+
+    - name: Install the-unarchiver
+      homebrew_cask:
+        name: the-unarchiver
+        state: present
+
+    - name: Install cleanmymac
+      homebrew_cask:
+        name: cleanmymac-x
+        state: present
+
+    - name: Install stats
+      homebrew_cask:
+        name: stats
+        state: present
+
+    - name: Install adobe-acrobat-reader
+      homebrew_cask:
+        name: adobe-acrobat-reader
+        state: present
+
+    - name: Install logi-options+
+      homebrew_cask:
+        name: logi-options-plus
+        state: present
+
+    - name: Install autodesk-fusion360
+      homebrew_cask:
+        name: autodesk-fusion360
+        state: present
+
+    - name: Install upscayl
+      homebrew_cask:
+        name: upscayl
+        state: present
+
+    - name: Install lm-studio
+      homebrew_cask:
+        name: lm-studio
+        state: present

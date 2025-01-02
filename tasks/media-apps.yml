@@ -1,0 +1,34 @@
+---
+# Media & Entertainment Applications Installation
+- name: Install Media and Entertainment Apps
+  when: install_media | bool
+  block:
+    - name: Install vlc
+      homebrew_cask:
+        name: vlc
+        state: present
+
+    - name: Install spotify
+      homebrew_cask:
+        name: spotify
+        state: present
+
+    - name: Install 4k-video-downloader+
+      homebrew_cask:
+        name: 4k-video-downloader-plus
+        state: present
+
+    - name: Install shutter-encoder
+      homebrew_cask:
+        name: shutter-encoder
+        state: present
+
+    - name: Install obs
+      homebrew_cask:
+        name: obs
+        state: present
+
+    - name: Install audacity
+      homebrew_cask:
+        name: audacity
+        state: present

@@ -1,0 +1,45 @@
+---
+# Network & Remote Access Tools Installation
+- name: Install Network and Remote Access Tools
+  when: install_network | bool
+  block:
+    - name: Install iperf3
+      homebrew:
+        name: iperf3
+        state: present
+
+    - name: Install anydesk
+      homebrew_cask:
+        name: anydesk
+        state: present
+
+    - name: Install teamviewer
+      homebrew_cask:
+        name: teamviewer
+        state: present
+
+    - name: Install rustdesk
+      homebrew_cask:
+        name: rustdesk
+        state: present
+
+    - name: Install zerotier
+      homebrew_cask:
+        name: zerotier-one
+        state: present
+
+    - name: Install angry-ip-scanner
+      homebrew_cask:
+        name: angry-ip-scanner
+        state: present
+
+    - name: Install nordvpn
+      homebrew_cask:
+        name: nordvpn
+        state: present
+
+    # Network Configuration
+    - name: Configure DNS Servers
+      command: networksetup -setdnsservers Wi-Fi {{ dns_servers | join(' ') }}
+      when: dns_servers | length > 0
+      become: true

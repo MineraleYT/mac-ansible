@@ -1,0 +1,60 @@
+---
+# System Requirements Check
+- name: Check macOS version
+  command: sw_vers -productVersion
+  register: macos_version
+  changed_when: false
+
+- name: Verify minimum macOS version
+  assert:
+    that: macos_version.stdout is version('11.0', '>=')
+    msg: "macOS 11.0 or higher is required"
+
+- name: Check available disk space
+  command: df -h / | awk 'NR==2 {print $4}'
+  register: available_space
+  changed_when: false
+
+- name: Verify minimum disk space (20GB)
+  assert:
+    that: available_space.stdout | regex_replace('G','') | float >= 20.0
+    msg: "At least 20GB of free disk space is required"
+
+# Backup Check
+- name: Check Time Machine status
+  command: tmutil status
+  register: tm_status
+  ignore_errors: true
+  changed_when: false
+  when: enable_time_machine | bool
+
+# Homebrew Check
+- name: Check if Homebrew is installed
+  command: which brew
+  register: brew_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install Homebrew if not present
+  command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: brew_check.rc != 0
+
+# Update Homebrew
+- name: Update Homebrew
+  homebrew:
+    update_homebrew: yes
+    upgrade_all: yes
+    state: present
+  register: brew_update
+  retries: 3
+  delay: 5
+  until: brew_update is success
+
+- name: Update Homebrew Cask
+  homebrew_cask:
+    update_homebrew: yes
+    state: present
+  register: cask_update
+  retries: 3
+  delay: 5
+  until: cask_update is success

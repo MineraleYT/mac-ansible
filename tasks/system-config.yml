@@ -1,0 +1,33 @@
+---
+# Cleanup Tasks
+- name: Perform Cleanup Tasks
+  block:
+    - name: Cleanup Homebrew
+      command: brew cleanup
+      changed_when: false
+
+    - name: Remove Homebrew cache
+      file:
+        path: "~/Library/Caches/Homebrew"
+        state: absent
+
+# Installation Summary
+- name: Generate Installation Summary
+  block:
+    - name: Get installed package versions
+      command: brew list --versions
+      register: installed_versions
+      changed_when: false
+
+    - name: Display Installation Summary
+      debug:
+        msg: 
+          - "Installation Complete!"
+          - "Installed Packages:"
+          - "{{ installed_versions.stdout_lines }}"
+          - "System Configuration:"
+          - "- Firewall: {{ enable_firewall }}"
+          - "- FileVault: {{ enable_filevault }}"
+          - "- Time Machine: {{ enable_time_machine }}"
+          - "- Dark Mode: {{ dark_mode }}"
+          - "- DNS Servers: {{ dns_servers | join(', ') }}"

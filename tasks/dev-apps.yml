@@ -1,0 +1,59 @@
+---
+# Development Tools Installation
+- name: Install Development Tools
+  when: install_dev_tools | bool
+  block:
+    - name: Install visual-studio-code
+      homebrew_cask:
+        name: visual-studio-code
+        state: present
+        version: "{{ vscode_version }}"
+
+    - name: Install docker
+      homebrew_cask:
+        name: docker
+        state: present
+        version: "{{ docker_version }}"
+
+    - name: Install arduino-ide
+      homebrew_cask:
+        name: arduino-ide
+        state: present
+
+    - name: Install lens
+      homebrew_cask:
+        name: lens
+        state: present
+
+    - name: Install utm
+      homebrew_cask:
+        name: utm
+        state: present
+
+    - name: Install bambu-studio
+      homebrew_cask:
+        name: bambu-studio
+        state: present
+
+    - name: Install raspberry-pi-imager
+      homebrew_cask:
+        name: raspberry-pi-imager
+        state: present
+
+    - name: Install orka-desktop
+      homebrew_cask:
+        name: orka
+        state: present
+
+    # Configure development tools
+    - name: Configure VS Code Extensions
+      command: code --install-extension {{ item }}
+      with_items: "{{ vscode_extensions }}"
+      ignore_errors: true
+
+    - name: Configure Git
+      git_config:
+        name: "{{ item.key }}"
+        value: "{{ item.value }}"
+        scope: global
+      with_dict: "{{ git_config }}"

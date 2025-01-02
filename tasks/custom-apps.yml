@@ -1,0 +1,59 @@
+---
+# Custom Applications Installation
+- name: Install Custom Applications
+  when: install_custom_apps | bool
+  block:
+    # Example of a custom app installation from DMG
+    - name: Download custom app DMG
+      get_url:
+        url: "{{ custom_app_url }}"
+        dest: "/tmp/{{ custom_app_name }}.dmg"
+      when: custom_app_url is defined and custom_app_name is defined
+
+    - name: Mount DMG
+      command: hdiutil attach "/tmp/{{ custom_app_name }}.dmg"
+      when: custom_app_url is defined and custom_app_name is defined
+
+    - name: Copy app to Applications
+      command: cp -R "/Volumes/{{ custom_app_name }}/{{ custom_app_name }}.app" /Applications/
+      when: custom_app_url is defined and custom_app_name is defined
+
+    - name: Unmount DMG
+      command: hdiutil detach "/Volumes/{{ custom_app_name }}"
+      when: custom_app_url is defined and custom_app_name is defined
+
+    # Example of a custom app installation from PKG
+    - name: Download custom app PKG
+      get_url:
+        url: "{{ custom_pkg_url }}"
+        dest: "/tmp/{{ custom_pkg_name }}.pkg"
+      when: custom_pkg_url is defined and custom_pkg_name is defined
+
+    - name: Install PKG
+      command: installer -pkg "/tmp/{{ custom_pkg_name }}.pkg" -target /
+      become: true
+      when: custom_pkg_url is defined and custom_pkg_name is defined
+
+    # Example of a custom app installation from ZIP
+    - name: Download custom app ZIP
+      get_url:
+        url: "{{ custom_zip_url }}"
+        dest: "/tmp/{{ custom_zip_name }}.zip"
+      when: custom_zip_url is defined and custom_zip_name is defined
+
+    - name: Extract ZIP
+      unarchive:
+        src: "/tmp/{{ custom_zip_name }}.zip"
+        dest: /Applications/
+      when: custom_zip_url is defined and custom_zip_name is defined
+
+    # Cleanup
+    - name: Remove temporary files
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/tmp/{{ custom_app_name }}.dmg"
+        - "/tmp/{{ custom_pkg_name }}.pkg"
+        - "/tmp/{{ custom_zip_name }}.zip"
+      when: custom_app_name is defined or custom_pkg_name is defined or custom_zip_name is defined

@@ -31,6 +31,10 @@
       include_tasks: tasks/network-apps.yml
       when: install_network | bool
 
+    - name: Include Custom Applications Installation
+      include_tasks: tasks/custom-apps.yml
+      when: install_custom_apps | bool
+
   post_tasks:
     - name: Include System Configuration and Cleanup
       include_tasks: tasks/system-config.yml

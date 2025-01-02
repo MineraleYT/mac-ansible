@@ -10,7 +10,7 @@ Automate your macOS setup with Ansible. Install and configure applications, deve
 - Utility applications
 - Network tools
 - System preferences
-- Custom Homebrew casks
+- Custom application support
 
 ## 🛠 Prerequisites
 
@@ -26,22 +26,23 @@ mac-ansible/
 ├── hosts.ini              # Inventory configuration
 ├── vars/
 │   └── config.yml         # Configuration variables
-├── tasks/
-│   ├── installation.yml   # Homebrew and Ansible setup
-│   ├── pre-checks.yml     # System requirements
-│   ├── dev-apps.yml       # Development tools
-│   ├── browser-apps.yml   # Browsers and communication
-│   ├── media-apps.yml     # Media applications
-│   ├── utility-apps.yml   # Utility applications
-│   ├── network-apps.yml   # Network tools
-│   └── system-config.yml  # System preferences
+└── tasks/
+    ├── installation.yml   # Homebrew and Ansible setup
+    ├── pre-checks.yml     # System requirements
+    ├── dev-apps.yml       # Development tools
+    ├── browser-apps.yml   # Browsers and communication
+    ├── media-apps.yml     # Media applications
+    ├── utility-apps.yml   # Utility applications
+    ├── network-apps.yml   # Network tools
+    ├── custom-apps.yml    # Custom application installation
+    └── system-config.yml  # System preferences
 ```
 
 ## ⚡️ Quick Start
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/mineraleyt/mac-ansible.git
+git clone https://github.com/yourusername/mac-ansible.git
 cd mac-ansible
 ```
 
@@ -66,10 +67,7 @@ install_media: true
 install_utilities: true
 install_network: true
 install_creative: true
-
-# System preferences
-dock_autohide: true
-dark_mode: true
+install_custom_apps: false
 ```
 
 ## 🔧 Customization
@@ -79,7 +77,7 @@ dark_mode: true
 
 ## 📝 License
 
-MIT
+GPL-3.0
 
 ## 🤝 Contributing
 

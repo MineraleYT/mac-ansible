@@ -1,0 +1,51 @@
+---
+# Homebrew and Ansible Installation
+- name: Check if Homebrew is installed
+  command: which brew
+  register: brew_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install Homebrew if not present
+  command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: brew_check.rc != 0
+
+- name: Add Homebrew to PATH for Apple Silicon
+  when: ansible_architecture == "arm64" and brew_check.rc != 0
+  block:
+    - name: Add Homebrew to zprofile
+      lineinfile:
+        path: ~/.zprofile
+        line: 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+        create: yes
+
+    - name: Source zprofile
+      shell: source ~/.zprofile
+      args:
+        executable: /bin/zsh
+
+- name: Check if Ansible is installed
+  command: which ansible
+  register: ansible_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install Ansible and dependencies
+  when: ansible_check.rc != 0
+  block:
+    - name: Install Python3
+      homebrew:
+        name: python3
+        state: present
+
+    - name: Install Ansible
+      homebrew:
+        name: ansible
+        state: present
+
+    - name: Install Ansible dependencies
+      pip:
+        name:
+          - ansible
+          - openssl
+        state: present

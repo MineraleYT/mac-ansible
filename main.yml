@@ -4,6 +4,9 @@
     - vars/config.yml
 
   pre_tasks:
+    - name: Include Installation Tasks
+      include_tasks: tasks/installation.yml
+
     - name: Include Pre-installation Checks
       include_tasks: tasks/pre-checks.yml
 
@@ -27,10 +30,6 @@
     - name: Include Network Tools Installation
       include_tasks: tasks/network-apps.yml
       when: install_network | bool
-
-    - name: Include DaVinci Resolve Studio Installation
-      include_tasks: tasks/davinci-resolve.yml
-      when: install_davinci | bool
 
   post_tasks:
     - name: Include System Configuration and Cleanup

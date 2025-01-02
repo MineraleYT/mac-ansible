@@ -1,0 +1,59 @@
+# Ansible
+*.retry
+*.pyc
+__pycache__/
+.ansible/
+ansible.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Logs
+*.log
+logs/
+log/
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+*.backup
+
+# Custom Homebrew Casks downloads
+*.dmg
+*.pkg
+*.zip
+*.app
+
+# Local configuration
+local.yml
+local.yaml
+local.cfg

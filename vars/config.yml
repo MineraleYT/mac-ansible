@@ -6,19 +6,6 @@ install_media: true
 install_utilities: true
 install_network: true
 install_creative: true
-install_davinci: true  # Toggle for DaVinci Resolve installation
-
-# DaVinci Resolve Settings
-davinci_studio_license: ""  # Add your license key here
-davinci_timeline_fps: "24"
-davinci_timeline_resolution:
-  width: 3840
-  height: 2160
-davinci_color_science: "DaVinci YRGB Color Managed"
-davinci_color_input: "DaVinci Wide Gamut"
-davinci_color_timeline: "DaVinci Wide Gamut"
-davinci_color_output: "Rec.709 Gamma 2.4"
-davinci_autosave_interval: 5  # minutes
 
 # System Preferences
 dock_autohide: true
@@ -26,26 +13,22 @@ dark_mode: true
 
 # Security Settings
 enable_firewall: true
-enable_filevault: false
 
 # Network Settings
 dns_servers:
   - "1.1.1.1"
   - "1.0.0.1"
 
-# Backup Settings
-enable_time_machine: true
-backup_path: ""
-
 # Package versions
 vscode_version: latest
 docker_version: latest
 
-# App-specific configurations
+# Development Tools Configuration
 vscode_extensions:
   - "ms-python.python"
   - "golang.go"
   - "dbaeumer.vscode-eslint"
+  - "redhat.ansible"
 
 git_config:
   core.editor: "code --wait"

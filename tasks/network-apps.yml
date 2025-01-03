@@ -41,5 +41,5 @@
     # Configure DNS if specified
     - name: Configure DNS Servers
       command: networksetup -setdnsservers Wi-Fi {{ dns_servers | join(' ') }}
-      when: dns_servers | length > 0
+      when: dns_servers is defined and dns_servers | length > 0
       become: true

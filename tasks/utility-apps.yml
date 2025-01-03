@@ -3,11 +3,6 @@
 - name: Install Utility Applications
   when: install_utilities | bool
   block:
-    - name: Install Warp
-      homebrew_cask:
-        name: warp
-        state: present
-
     - name: Install The Unarchiver
       homebrew_cask:
         name: the-unarchiver
@@ -15,7 +10,7 @@
 
     - name: Install CleanMyMac X
       homebrew_cask:
-        name: cleanmymac-x
+        name: cleanmymac
         state: present
 
     - name: Install Stats
@@ -33,12 +28,12 @@
         name: logi-options-plus
         state: present
 
-    - name: Install Upscayl
-      homebrew_cask:
-        name: upscayl
-        state: present
-
     - name: Install LM Studio
       homebrew_cask:
         name: lm-studio
+        state: present
+
+    - name: Install Warp
+      homebrew_cask:
+        name: warp
         state: present

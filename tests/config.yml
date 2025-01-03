@@ -1,0 +1,25 @@
+---
+# Test configuration with minimal installations
+install_dev_tools: true
+install_browsers: true
+install_media: false
+install_utilities: false
+install_network: false
+install_custom_apps: false
+
+# System Preferences
+dock_autohide: true
+dark_mode: true
+
+# Security Settings
+enable_firewall: true
+
+# Network Settings
+dns_servers:
+  - "1.1.1.1"
+  - "1.0.0.1"
+
+# Development Tools Configuration
+vscode_extensions:
+  - "ms-python.python"
+  - "redhat.ansible"

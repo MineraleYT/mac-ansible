@@ -7,13 +7,11 @@
       homebrew_cask:
         name: visual-studio-code
         state: present
-        version: "{{ vscode_version }}"
 
     - name: Install Docker
       homebrew_cask:
         name: docker
         state: present
-        version: "{{ docker_version }}"
 
     - name: Install Arduino IDE
       homebrew_cask:

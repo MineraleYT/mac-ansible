@@ -32,3 +32,8 @@
       homebrew_cask:
         name: audacity
         state: present
+
+    - name: Install Upscayl
+      homebrew_cask:
+        name: upscayl
+        state: present

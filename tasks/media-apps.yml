@@ -15,7 +15,7 @@
 
     - name: Install 4K Video Downloader+
       homebrew_cask:
-        name: 4k-video-downloader-plus
+        name: 4k-video-downloader+
         state: present
 
     - name: Install Shutter Encoder

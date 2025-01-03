@@ -23,11 +23,6 @@
         name: telegram
         state: present
 
-    - name: Install Telegram Alpha
-      homebrew_cask:
-        name: telegram-alpha
-        state: present
-
     - name: Install WhatsApp
       homebrew_cask:
         name: whatsapp

@@ -40,12 +40,7 @@
 
     - name: Install Orka Desktop
       homebrew_cask:
-        name: orka
-        state: present
-
-    - name: Install Autodesk Fusion 360
-      homebrew_cask:
-        name: autodesk-fusion360
+        name: orka-desktop
         state: present
 
     # Configure VS Code extensions

@@ -1,9 +1,10 @@
 ---
-# Custom Applications Installation
-- name: Install Custom Applications
+# Custom Application Installation Template
+# Copy this file and modify for your custom app
+- name: Install Custom Application
   when: install_custom_apps | bool
   block:
-    # Example of a custom app installation from DMG
+    # Example of DMG installation
     - name: Download custom app DMG
       get_url:
         url: "{{ custom_app_url }}"
@@ -22,7 +23,7 @@
       command: hdiutil detach "/Volumes/{{ custom_app_name }}"
       when: custom_app_url is defined and custom_app_name is defined
 
-    # Example of a custom app installation from PKG
+    # Example of PKG installation
     - name: Download custom app PKG
       get_url:
         url: "{{ custom_pkg_url }}"
@@ -34,7 +35,7 @@
       become: true
       when: custom_pkg_url is defined and custom_pkg_name is defined
 
-    # Example of a custom app installation from ZIP
+    # Example of ZIP installation
     - name: Download custom app ZIP
       get_url:
         url: "{{ custom_zip_url }}"
@@ -46,6 +47,13 @@
         src: "/tmp/{{ custom_zip_name }}.zip"
         dest: /Applications/
       when: custom_zip_url is defined and custom_zip_name is defined
+
+    # Example of Homebrew Cask installation
+    - name: Install via Homebrew Cask
+      homebrew_cask:
+        name: "{{ custom_cask_name }}"
+        state: present
+      when: custom_cask_name is defined
 
     # Cleanup
     - name: Remove temporary files

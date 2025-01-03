@@ -155,9 +155,3 @@
   retries: 3
   delay: 5
   until: brew_update is success
-
-- name: Update Homebrew Cask (Optional)
-  command: brew update --cask
-  register: cask_update
-  ignore_errors: true
-  changed_when: "'Upgrading' in cask_update.stdout"

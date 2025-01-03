@@ -1,0 +1,9 @@
+---
+# Autodesk Fusion 360 Installation
+- name: Install Autodesk Fusion 360
+  when: install_custom_apps | bool and install_fusion360 | bool
+  block:
+    - name: Install Autodesk Fusion 360 via Homebrew Cask
+      homebrew_cask:
+        name: autodesk-fusion360
+        state: present

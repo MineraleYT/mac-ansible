@@ -8,7 +8,7 @@ install_network: false
 install_custom_apps: false
 
 # System Preferences
-dock_autohide: true
+dock_autohide: false
 dark_mode: true
 
 # Security Settings

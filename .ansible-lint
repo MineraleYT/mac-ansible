@@ -1,0 +1,32 @@
+---
+exclude_paths:
+  - .git/
+  - .github/
+  - .ansible/
+  - roles/
+  - collections/
+  - .cache/
+  - .venv/
+
+skip_list:
+  # Allow commands with changed_when missing
+  - no-changed-when
+  # Allow commands with handlers
+  - no-handler
+  # Allow Ansible lint "package-latest" (allow latest package)
+  - package-latest
+  # Allow Ansible lint "command-instead-of-module"
+  - command-instead-of-module
+  # Allow Ansible lint "command-instead-of-shell"
+  - command-instead-of-shell
+  # Allow raw module usage
+  - command-instead-of-module[raw]
+
+warn_list:
+  - yaml
+  - var-spacing
+  - role-name
+  - ignore-errors
+  - fqcn-builtins
+  - no-relative-paths
+  - var-naming[no-role-prefix]
